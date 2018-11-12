@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Aevi Agent Simulator</string>
+
+    <string name="save">Save</string>
+
+    <string name="uin_label">UIN</string>
+    <string name="uin_hint">Enter a UIN here&#8230;</string>
+    <string name="save_success">Saved successfully</string>
+    <string name="save_fail">Save failed</string>
+
+    <string name="account_name">Simulated Account</string>
+    <string name="role_label">Role</string>
+
+    <string-array name="roles">
+        <item>Operator</item>
+        <item>Manager</item>
+        <item>Technician</item>
+    </string-array>
+</resources>
