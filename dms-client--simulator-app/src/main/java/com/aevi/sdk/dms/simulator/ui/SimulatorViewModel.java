@@ -26,7 +26,7 @@ public class SimulatorViewModel extends ViewModel {
     private final AppSettings appSettings;
     private final AppSchedulers schedulers;
 
-    private CompositeDisposable disposables = new CompositeDisposable();
+    private CompositeDisposable disposables;
 
     @Inject
     SimulatorViewModel(DmsClient dmsClient, AppSettings appSettings, AppSchedulers schedulers) {
@@ -38,10 +38,11 @@ public class SimulatorViewModel extends ViewModel {
     @Override
     protected void onCleared() {
         super.onCleared();
-        disposables.dispose();
+        if (disposables != null) disposables.dispose();
     }
 
     public void start() {
+        disposables = new CompositeDisposable();
         subscribeToDmsInfo();
         subscribeToAccount();
     }

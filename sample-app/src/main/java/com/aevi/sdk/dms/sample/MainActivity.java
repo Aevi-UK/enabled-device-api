@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        disposables.dispose();
+        if (disposables != null) disposables.dispose();
     }
 
     @Override
