@@ -28,27 +28,27 @@ public final class DmsClient {
 
     private static final Uri SDK_CONTENT_URI = Uri.parse("content://com.aevi.dms.info");
 
-    private abstract class RxProviderMethod<T> extends Single<T> {
-
-        private final String method;
-
-        RxProviderMethod(String method) {
-            this.method = method;
-        }
-
-        protected abstract T deserialize(Bundle bundle);
-
-        @Override
-        protected void subscribeActual(SingleObserver<? super T> singleObserver) {
-            try {
-                Bundle bundle = context.getContentResolver().call(SDK_CONTENT_URI, method, null, null);
-                T value = deserialize(bundle);
-                singleObserver.onSuccess(value);
-            } catch (Exception e) {
-                singleObserver.onError(e);
-            }
-        }
-    }
+//    private abstract class RxProviderMethod<T> extends Single<T> {
+//
+//        private final String method;
+//
+//        RxProviderMethod(String method) {
+//            this.method = method;
+//        }
+//
+//        protected abstract T deserialize(Bundle bundle);
+//
+//        @Override
+//        protected void subscribeActual(SingleObserver<? super T> singleObserver) {
+//            try {
+//                Bundle bundle = context.getContentResolver().call(SDK_CONTENT_URI, method, null, null);
+//                T value = deserialize(bundle);
+//                singleObserver.onSuccess(value);
+//            } catch (Exception e) {
+//                singleObserver.onError(e);
+//            }
+//        }
+//    }
 
     private abstract class RxBroadcastReceiver<T> extends BroadcastReceiver implements ObservableOnSubscribe<T> {
 
@@ -93,16 +93,19 @@ public final class DmsClient {
      * @return an instance of {@link DmsInfo}
      */
     public Single<DmsInfo> info() {
-        return new RxProviderMethod<DmsInfo>(SDK_DMS_INFO_METHOD) {
-            @Override
-            protected DmsInfo deserialize(Bundle bundle) {
+        return Single.create(emitter -> {
+            try {
+                Bundle bundle = context.getContentResolver().call(SDK_CONTENT_URI, SDK_DMS_INFO_METHOD, null, null);
+
                 if (isEmpty(bundle)) {
-                    throw new IllegalArgumentException("Bundle cannot be null nor empty");
+                    throw new IllegalStateException("No DMS information found");
                 } else {
-                    return new DmsInfo(bundle.getString(FIELD_UIN));
+                    emitter.onSuccess(new DmsInfo(bundle.getString(FIELD_UIN)));
                 }
+            } catch (Exception e) {
+                emitter.onError(e);
             }
-        };
+        });
     }
 
     /**

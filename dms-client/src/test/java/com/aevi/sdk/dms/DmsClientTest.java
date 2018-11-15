@@ -27,7 +27,8 @@ public class DmsClientTest {
         TestObserver<DmsInfo> observer = client.info().test();
 
         // Then
-        observer.assertNoErrors();
+        Assert.assertEquals(observer.errorCount(), 1);
+        observer.assertErrorMessage("No DMS information found");
         observer.assertNoValues();
     }
 
@@ -50,7 +51,7 @@ public class DmsClientTest {
     }
 
     @Test
-    public void nullClientInfo() {
+    public void nullClientInfoUin() {
         // Given
         DmsClient client = new DmsClient(RuntimeEnvironment.systemContext);
         MockContentProvider contentProvider = mockContentProvider();
@@ -61,7 +62,9 @@ public class DmsClientTest {
 
         // Then
         observer.assertNoErrors();
-        observer.assertNoValues();
+        observer.assertValueCount(1);
+        DmsInfo receivedDmsInfo = observer.values().get(0);
+        Assert.assertNull(receivedDmsInfo.getUin());
     }
 
     @Test
