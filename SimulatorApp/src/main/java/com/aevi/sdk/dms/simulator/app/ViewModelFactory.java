@@ -12,27 +12,24 @@
  *  limitations under the License.
  */
 
-package com.aevi.sdk.dms;
+package com.aevi.sdk.dms.simulator.app;
 
-import io.reactivex.annotations.Nullable;
+import android.arch.lifecycle.ViewModel;
+import android.arch.lifecycle.ViewModelProvider;
+import android.support.annotation.NonNull;
 
-/**
- * Device management service configuration
- */
-public final class DmsInfo {
+public class ViewModelFactory<VMType extends ViewModel> implements ViewModelProvider.Factory {
 
-    private final String uin;
+    private final VMType mViewModel;
 
-    DmsInfo(@Nullable String uin) {
-        this.uin = uin;
+    public ViewModelFactory(VMType viewModel) {
+        mViewModel = viewModel;
     }
 
-    /**
-     * @return the unique identifier number of this device. This number isn't attached to a physical device but is
-     * unique amongst the list of active devices. // TODO - Could we explain this as an "installation ID"?
-     */
-    @Nullable
-    public String getUin() {
-        return uin;
+    @NonNull
+    @Override
+    @SuppressWarnings("unchecked")
+    public <T extends ViewModel> T create(@NonNull Class<T> clazz) {
+        return (T)mViewModel;
     }
 }

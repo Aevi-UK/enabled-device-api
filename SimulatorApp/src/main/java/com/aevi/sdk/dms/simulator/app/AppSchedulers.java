@@ -12,27 +12,19 @@
  *  limitations under the License.
  */
 
-package com.aevi.sdk.dms;
+package com.aevi.sdk.dms.simulator.app;
 
-import io.reactivex.annotations.Nullable;
+import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
-/**
- * Device management service configuration
- */
-public final class DmsInfo {
+public interface AppSchedulers {
 
-    private final String uin;
-
-    DmsInfo(@Nullable String uin) {
-        this.uin = uin;
+    default Scheduler main() {
+        return AndroidSchedulers.mainThread();
     }
 
-    /**
-     * @return the unique identifier number of this device. This number isn't attached to a physical device but is
-     * unique amongst the list of active devices. // TODO - Could we explain this as an "installation ID"?
-     */
-    @Nullable
-    public String getUin() {
-        return uin;
+    default Scheduler io() {
+        return Schedulers.io();
     }
 }

@@ -12,27 +12,26 @@
  *  limitations under the License.
  */
 
-package com.aevi.sdk.dms;
+package com.aevi.sdk.dms.simulator.app;
 
-import io.reactivex.annotations.Nullable;
+import com.aevi.sdk.dms.simulator.di.DaggerAppComponent;
 
-/**
- * Device management service configuration
- */
-public final class DmsInfo {
+import dagger.android.AndroidInjector;
+import dagger.android.DaggerApplication;
+import timber.log.Timber;
 
-    private final String uin;
+public class App extends DaggerApplication {
 
-    DmsInfo(@Nullable String uin) {
-        this.uin = uin;
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        Timber.plant(new Timber.DebugTree());
     }
 
-    /**
-     * @return the unique identifier number of this device. This number isn't attached to a physical device but is
-     * unique amongst the list of active devices. // TODO - Could we explain this as an "installation ID"?
-     */
-    @Nullable
-    public String getUin() {
-        return uin;
+    @Override
+    protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
+        return DaggerAppComponent.builder()
+            .application(this)
+            .build();
     }
 }

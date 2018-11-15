@@ -1,3 +1,17 @@
+/*
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+
 package com.aevi.sdk.dms;
 
 import android.content.BroadcastReceiver;
@@ -8,6 +22,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import io.reactivex.*;
+import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposables;
 
 /**
@@ -18,37 +33,15 @@ public final class DmsClient {
     public static final String SDK_DMS_INFO_METHOD = "dmsInfo";
     public static final String SDK_LOGGED_IN_ACCOUNT_METHOD = "loggedInAccount";
 
-    static final String ACTION_SESSION_CHANGE = "com.aevi.SESSION_CHANGE";
-
     public static final String FIELD_UIN = "uin";
 
     public static final String FIELD_ACCOUNT_ID = "id";
     public static final String FIELD_ACCOUNT_NAME = "name";
     public static final String FIELD_ACCOUNT_ROLE = "role";
 
-    private static final Uri SDK_CONTENT_URI = Uri.parse("content://com.aevi.dms.info");
+    static final String ACTION_SESSION_CHANGE = "com.aevi.SESSION_CHANGE";
 
-//    private abstract class RxProviderMethod<T> extends Single<T> {
-//
-//        private final String method;
-//
-//        RxProviderMethod(String method) {
-//            this.method = method;
-//        }
-//
-//        protected abstract T deserialize(Bundle bundle);
-//
-//        @Override
-//        protected void subscribeActual(SingleObserver<? super T> singleObserver) {
-//            try {
-//                Bundle bundle = context.getContentResolver().call(SDK_CONTENT_URI, method, null, null);
-//                T value = deserialize(bundle);
-//                singleObserver.onSuccess(value);
-//            } catch (Exception e) {
-//                singleObserver.onError(e);
-//            }
-//        }
-//    }
+    private static final Uri SDK_CONTENT_URI = Uri.parse("content://com.aevi.dms.info");
 
     private abstract class RxBroadcastReceiver<T> extends BroadcastReceiver implements ObservableOnSubscribe<T> {
 
@@ -92,6 +85,7 @@ public final class DmsClient {
      * Retrieve information about the current device management service configuration
      * @return an instance of {@link DmsInfo}
      */
+    @NonNull
     public Single<DmsInfo> info() {
         return Single.create(emitter -> {
             try {
@@ -113,6 +107,7 @@ public final class DmsClient {
      * notified straight away and subsequently following any other changes. Please note no notification will be issued on logout.
      * @return an observable to watch for logged in {@link Account} change
      */
+    @NonNull
     public Observable<Account> loggedInAccount() {
         return Observable.create(new RxBroadcastReceiver<Account>(SDK_LOGGED_IN_ACCOUNT_METHOD, new IntentFilter(ACTION_SESSION_CHANGE)) {
             @Override

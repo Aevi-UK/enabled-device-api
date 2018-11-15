@@ -12,27 +12,13 @@
  *  limitations under the License.
  */
 
-package com.aevi.sdk.dms;
+package com.aevi.sdk.dms.simulator.di;
 
-import io.reactivex.annotations.Nullable;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
-/**
- * Device management service configuration
- */
-public final class DmsInfo {
+import javax.inject.Scope;
 
-    private final String uin;
-
-    DmsInfo(@Nullable String uin) {
-        this.uin = uin;
-    }
-
-    /**
-     * @return the unique identifier number of this device. This number isn't attached to a physical device but is
-     * unique amongst the list of active devices. // TODO - Could we explain this as an "installation ID"?
-     */
-    @Nullable
-    public String getUin() {
-        return uin;
-    }
-}
+@Scope
+@Retention(RetentionPolicy.RUNTIME)
+@interface ActivityScope {}

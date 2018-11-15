@@ -1,1 +1,1 @@
-include ':dms-client--simulator-app', ':dms-client', ':sample-app'
+include ':SimulatorApp', ':dms-client', ':SampleApp'
