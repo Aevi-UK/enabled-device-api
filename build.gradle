@@ -6,22 +6,16 @@ buildscript {
 
     dependencies {
         classpath 'com.android.tools.build:gradle:3.2.1'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4'
     }
 }
-
-apply from: 'dependencies.gradle'
 
 allprojects {
     repositories {
         google()
         jcenter()
-
         maven {
-            url "s3://sdk-releases.aevi.com/maven2"
-            credentials(AwsCredentials) {
-                accessKey aws_accessid
-                secretKey aws_accesskey
-            }
+            url "http://sdk-public-artifacts.s3-website-eu-west-1.amazonaws.com/maven2"
         }
     }
 }
@@ -29,3 +23,5 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+apply from: 'dependencies.gradle'

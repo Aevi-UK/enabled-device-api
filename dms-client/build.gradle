@@ -1,9 +1,11 @@
 apply plugin: 'java-library'
 
-group = 'com.aevi.sdk.dms'
-version = '1.0.0'
+project.ext {
+    apiVersion = "1.0.0"
+    libName = "dms-client"
+}
 
-compileJava   {
+compileJava {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
 }
@@ -22,3 +24,5 @@ javadoc {
     title = "Enabled Device API"
     source = sourceSets.main.allJava
 }
+
+apply from: '../bintray.gradle'
