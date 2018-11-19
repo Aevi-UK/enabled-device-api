@@ -1,0 +1,45 @@
+apply plugin: 'maven-publish'
+apply plugin: 'com.jfrog.bintray'
+
+def siteUrl = 'https://github.com/Aevi-UK/enabled-device-api'
+def gitUrl = 'https://github.com/Aevi-UK/enabled-device-api.git'
+
+publishing {
+    publications {
+        apiJar(MavenPublication) {
+            version = project.apiVersion
+            artifactId = project.name
+            groupId = project.group
+            from components.java
+        }
+    }
+}
+
+bintray {
+    if (project.hasProperty('bintrayUser') && project.hasProperty('bintrayKey')) {
+        user = project.bintrayUser
+        key = project.bintrayKey
+    }
+
+    publications = ['apiJar']
+    override = true
+
+    pkg {
+        dryRun = false
+        publish = true
+        repo = 'aevi-uk'
+        name = 'dms-client'
+        userOrg = 'aevi'
+        licenses = ['Apache-2.0']
+        labels = ['payment', 'android']
+        websiteUrl = siteUrl
+        issueTrackerUrl = 'https://github.com/Aevi-UK/enabled-device-api/issues'
+        vcsUrl = gitUrl
+        publicDownloadNumbers = true
+        version {
+            name = "$project.apiVersion"
+            desc = "Aevi DMS Client"
+            vcsTag = "$project.apiVersion"
+        }
+    }
+}

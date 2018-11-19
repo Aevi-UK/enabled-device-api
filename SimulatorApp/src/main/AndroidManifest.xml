@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.aevi.sdk.dms.simulator">
+
+    <application
+        android:allowBackup="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:name="com.aevi.sdk.dms.simulator.app.App">
+
+        <activity android:name="com.aevi.sdk.dms.simulator.ui.SimulatorView">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
+        <provider
+            android:name="com.aevi.sdk.dms.simulator.app.AppContentProvider"
+            android:authorities="com.aevi.dms.info"
+            tools:ignore="ExportedContentProvider"
+            android:exported="true"/>
+    </application>
+</manifest>

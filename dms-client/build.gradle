@@ -1,0 +1,28 @@
+apply plugin: 'java-library'
+
+project.ext {
+    apiVersion = "1.0.0"
+    libName = "dms-client"
+}
+
+compileJava {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+dependencies {
+    compileOnly domainDependencies.rxJava
+    compileOnly domainDependencies.androidMockable
+
+    testImplementation testDependencies.junit
+    testImplementation domainDependencies.rxJava
+    testImplementation testDependencies.robolectric
+    testImplementation domainDependencies.androidMockable
+}
+
+javadoc {
+    title = "Enabled Device API"
+    source = sourceSets.main.allJava
+}
+
+apply from: '../bintray.gradle'
