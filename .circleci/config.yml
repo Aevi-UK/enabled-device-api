@@ -105,8 +105,7 @@ jobs:
       # Define tasks to run on qa branches (release/*)
       # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
       - run: ./gradlew clean assemble publishApiJarPublicationToQaRepository
-      - run: ./gradlew assembleRelease publishReleasePublicationToQaRepository publishOfficialReleasePublicationToQaRepository publishUnicornReleasePublicationToQaRepository
-      - run: ./gradlew assembleOfficialUnsigned publishOfficialUnsignedPublicationToQaRepository
+      - run: ./gradlew assembleRelease publishApiJarPublicationToQaRepository
       # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
   assemble-deploy-release:
@@ -116,7 +115,6 @@ jobs:
       # ********************************************
       # Define tasks to run on master branch
       # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-      - run: ./gradlew assemble publishApiJarPublicationToReleaseRepository
-      - run: ./gradlew checkNoRc assembleRelease publishReleasePublicationToReleaseRepository publishOfficialReleasePublicationToReleaseRepository
-      - run: ./gradlew assembleUnsigned publishUnsignedPublicationToReleaseRepository
+      - run: ./gradlew clean assemble publishApiJarPublicationToReleaseRepository
+      - run: ./gradlew assembleRelease publishApiJarPublicationToReleaseRepository
       # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
