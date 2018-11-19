@@ -1,0 +1,1 @@
+include ':SimulatorApp', ':dms-client', ':SampleApp'
