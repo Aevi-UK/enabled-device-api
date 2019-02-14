@@ -26,7 +26,7 @@ android {
 }
 
 dependencies {
-    implementation project(':dms-client')
+    implementation project(':enabled-device-api')
 
     implementation domainDependencies.supportDesign
     implementation domainDependencies.constraintLayout

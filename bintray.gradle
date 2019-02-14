@@ -9,7 +9,7 @@ publishing {
         apiJar(MavenPublication) {
             version = project.apiVersion
             artifactId = project.name
-            groupId = project.group
+            groupId = project.groupId
             from components.java
         }
     }
@@ -28,7 +28,7 @@ bintray {
         dryRun = false
         publish = true
         repo = 'aevi-uk'
-        name = 'dms-client'
+        name = 'enabled-device-api'
         userOrg = 'aevi'
         licenses = ['Apache-2.0']
         labels = ['payment', 'android']
@@ -38,7 +38,7 @@ bintray {
         publicDownloadNumbers = true
         version {
             name = "$project.apiVersion"
-            desc = "Aevi DMS Client"
+            desc = "Aevi enabled device API"
             vcsTag = "$project.apiVersion"
         }
     }

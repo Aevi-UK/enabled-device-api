@@ -1,1 +1,1 @@
-include ':SimulatorApp', ':dms-client', ':SampleApp'
+include ':SimulatorApp', ':enabled-device-api', ':SampleApp'

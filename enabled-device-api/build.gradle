@@ -2,7 +2,7 @@ apply plugin: 'java-library'
 
 project.ext {
     apiVersion = "1.0.0"
-    libName = "dms-client"
+    groupId = "com.aevi.dms"
 }
 
 compileJava {
