@@ -11,6 +11,24 @@ buildscript {
 }
 
 allprojects {
+
+    project.ext {
+        branch = 'git rev-parse --abbrev-ref HEAD'.execute([], project.rootDir).text.trim()
+        sha = 'git rev-parse --short HEAD'.execute([], project.rootDir).text.trim()
+        apiVersion = "1.0.1"
+        apiVersionCode = 1001
+
+        getVersionName = { suffix = '' ->
+            if (!branch || branch.equals('master')) {
+                return "${apiVersion}${suffix}"
+            } else if (branch.startsWith('release/')) {
+                "${apiVersion}${suffix}-RC1"
+            } else {
+                "${apiVersion}${suffix}-SNAPSHOT-${sha}"
+            }
+        }
+    }
+    
     repositories {
         google()
         jcenter()

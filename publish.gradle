@@ -2,7 +2,8 @@ apply plugin: 'maven-publish'
 
 publishing {
     repositories {
-        if (System.getenv("AEVI_ARTIFACTORY_AWS_ACCESS_ID") != null) {
+        if (System.getenv("AEVI_ARTIFACTORY_AWS_ACCESS_ID") != null
+                && System.getenv("AEVI_ARTIFACTORY_AWS_SECRET") != null ) {
             maven {
                 name 'release'
                 url "s3://sdk-releases.aevi.com/maven2"
@@ -19,16 +20,23 @@ publishing {
                     secretKey System.getenv("AEVI_ARTIFACTORY_AWS_SECRET")
                 }
             }
-        }
-        if (project.hasProperty('aws_accessid')) {
             maven {
                 name 'snapshot'
                 url "s3://sdk-snapshots.aevi.com/maven2"
                 credentials(AwsCredentials) {
-                    accessKey "${aws_accessid}"
-                    secretKey "${aws_accesskey}"
+                    accessKey System.getenv("AEVI_ARTIFACTORY_AWS_ACCESS_ID")
+                    accessKey System.getenv("AEVI_ARTIFACTORY_AWS_SECRET")
                 }
             }
+        }
+    }
+
+    publications {
+        apiJar(MavenPublication) {
+            version = project.getVersionName()
+            artifactId = project.name
+            groupId = project.groupId
+            from components.java
         }
     }
 }

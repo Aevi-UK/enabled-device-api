@@ -1,9 +1,7 @@
 apply plugin: 'java-library'
+apply from: '../bintray.gradle'
 
-project.ext {
-    apiVersion = "1.0.0"
-    groupId = "com.aevi.dms"
-}
+ext.groupId = "com.aevi.dms"
 
 compileJava {
     sourceCompatibility = JavaVersion.VERSION_1_8
@@ -24,6 +22,3 @@ javadoc {
     title = "Enabled Device API"
     source = sourceSets.main.allJava
 }
-
-apply from: '../publish-repo.gradle'
-apply from: '../bintray.gradle'

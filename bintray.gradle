@@ -1,24 +1,10 @@
-apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.bintray'
-
-def siteUrl = 'https://github.com/Aevi-UK/enabled-device-api'
-def gitUrl = 'https://github.com/Aevi-UK/enabled-device-api.git'
-
-publishing {
-    publications {
-        apiJar(MavenPublication) {
-            version = project.apiVersion
-            artifactId = project.name
-            groupId = project.groupId
-            from components.java
-        }
-    }
-}
+apply from: '../publish.gradle'
 
 bintray {
-    if (project.hasProperty('bintrayUser') && project.hasProperty('bintrayKey')) {
-        user = project.bintrayUser
-        key = project.bintrayKey
+    if (System.getenv("BINTRAY_USER") != null && System.getenv("BINTRAY_KEY") != null) {
+        user = System.getenv("BINTRAY_USER")
+        key = System.getenv("BINTRAY_KEY")
     }
 
     publications = ['apiJar']
@@ -28,18 +14,18 @@ bintray {
         dryRun = false
         publish = true
         repo = 'aevi-uk'
-        name = 'enabled-device-api'
+        name = project.name
         userOrg = 'aevi'
         licenses = ['Apache-2.0']
-        labels = ['payment', 'android']
-        websiteUrl = siteUrl
+        labels = ['mdm', 'android']
+        websiteUrl = 'https://github.com/Aevi-UK/enabled-device-api'
         issueTrackerUrl = 'https://github.com/Aevi-UK/enabled-device-api/issues'
-        vcsUrl = gitUrl
+        vcsUrl = 'https://github.com/Aevi-UK/enabled-device-api.git'
         publicDownloadNumbers = true
         version {
-            name = "$project.apiVersion"
+            name = project.getVersionName()
+            vcsTag = project.sha
             desc = "Aevi enabled device API"
-            vcsTag = "$project.apiVersion"
         }
     }
 }

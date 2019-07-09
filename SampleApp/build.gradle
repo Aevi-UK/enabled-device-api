@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion compileSDK
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -10,10 +10,10 @@ android {
 
     defaultConfig {
         applicationId "com.aevi.sdk.dms.sample"
-        minSdkVersion 21
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0.0"
+        minSdkVersion projectMinSdkVersion
+        targetSdkVersion projectMaxSdkVersion
+        versionCode project.apiVersionCode
+        versionName project.getVersionName()
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
