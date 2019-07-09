@@ -82,7 +82,7 @@ jobs:
       # Insert test artifacts to upload
       # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
       - store_artifacts:
-          path: dms-api/build/reports
+          path: enabled-device-api/build/reports
       # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
   assemble-deploy-snapshot:
@@ -94,7 +94,7 @@ jobs:
       # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
       - run: ./gradlew assembleDebug
       - store_artifacts:
-          path: dms-client/build/libs
+          path: enabled-device-api/build/libs
       # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
   assemble-deploy-qa:
@@ -104,7 +104,6 @@ jobs:
       # ********************************************
       # Define tasks to run on qa branches (release/*)
       # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-      - run: ./gradlew clean assemble publishApiJarPublicationToQaRepository
       - run: ./gradlew assembleRelease publishApiJarPublicationToQaRepository
       # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
@@ -115,6 +114,5 @@ jobs:
       # ********************************************
       # Define tasks to run on master branch
       # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-      - run: ./gradlew clean assemble publishApiJarPublicationToReleaseRepository
-      - run: ./gradlew assembleRelease publishApiJarPublicationToReleaseRepository
+      - run: ./gradlew assembleRelease publishApiJarPublicationToReleaseRepository bintrayUpload
       # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
