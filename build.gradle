@@ -10,13 +10,15 @@ buildscript {
     }
 }
 
+apply from: 'dependencies.gradle'
+
 allprojects {
 
     project.ext {
         branch = 'git rev-parse --abbrev-ref HEAD'.execute([], project.rootDir).text.trim()
         sha = 'git rev-parse --short HEAD'.execute([], project.rootDir).text.trim()
-        apiVersion = "1.0.1"
-        apiVersionCode = 1001
+        apiVersion = "1.0.2"
+        apiVersionCode = 1002
 
         getVersionName = { suffix = '' ->
             if (!branch || branch.equals('master')) {
@@ -41,5 +43,3 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
-
-apply from: 'dependencies.gradle'

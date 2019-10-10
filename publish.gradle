@@ -32,11 +32,27 @@ publishing {
     }
 
     publications {
-        apiJar(MavenPublication) {
-            version = project.getVersionName()
-            artifactId = project.name
-            groupId = project.groupId
-            from components.java
+        if(components.hasProperty('java')) {
+            apiJar(MavenPublication) {
+                groupId project.groupId
+                version project.getVersionName()
+                artifactId project.artifactId
+                from components.java
+            }
+        } else if(android.hasProperty('applicationVariants')) {
+            apply from: '../artifacts.gradle'
+            android.applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    "${variant.name}"(MavenPublication) {
+                        groupId project.groupId
+                        version variant.versionName
+                        artifactId project.artifactId
+                        artifact("${project.buildDir}/outputs/apk/${project.artifactId}-${output.baseName}-${variant.versionName}.apk")
+                    }
+                }
+            }
         }
+
+
     }
 }

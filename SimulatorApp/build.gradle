@@ -1,5 +1,9 @@
 apply plugin: 'com.android.application'
 
+ext.groupId = "com.aevi.dms"
+ext.artifactId = "enabled-device-simulator"
+apply from: '../publish.gradle'
+
 android {
     compileSdkVersion compileSDK
 
