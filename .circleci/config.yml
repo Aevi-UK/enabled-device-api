@@ -55,6 +55,9 @@ jobs:
           name: Setup AWS CLI
           command: sudo pip install awscli
       - checkout
+      - run:
+          name: Write gradle.properties
+          command: /bin/bash writegradleprops.sh
       - restore_cache:
           keys:
             - v2-dependencies-{{ checksum "dependencies.gradle" }}

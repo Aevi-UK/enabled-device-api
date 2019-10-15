@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 
+apply from: "../signing.gradle"
 ext.groupId = "com.aevi.dms"
 ext.artifactId = "enabled-device-simulator"
 apply from: '../publish.gradle'
@@ -22,9 +23,19 @@ android {
     }
 
     buildTypes {
+        debug {
+            signingConfig signingConfigs.hasProperty('sdk') ? signingConfigs.sdk : signingConfig
+        }
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.hasProperty('sdk') ? signingConfigs.sdk : signingConfigs._empty
+        }
+        unsigned {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig null
+            matchingFallbacks = ['release']
         }
     }
 }
