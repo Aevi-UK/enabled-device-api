@@ -55,6 +55,9 @@ jobs:
           name: Setup AWS CLI
           command: sudo pip install awscli
       - checkout
+      - run:
+          name: Write gradle.properties
+          command: /bin/bash writegradleprops.sh
       - restore_cache:
           keys:
             - v2-dependencies-{{ checksum "dependencies.gradle" }}
@@ -101,7 +104,7 @@ jobs:
       # ********************************************
       # Define tasks to run on qa branches (release/*)
       # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-      - run: ./gradlew assembleRelease publishApiJarPublicationToQaRepository
+      - run: ./gradlew jar assembleRelease publishApiJarPublicationToQaRepository publishReleasePublicationToQaRepository
       # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
   assemble-deploy-release:
@@ -111,5 +114,5 @@ jobs:
       # ********************************************
       # Define tasks to run on master branch
       # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-      - run: ./gradlew assembleRelease publishApiJarPublicationToReleaseRepository bintrayUpload
+      - run: ./gradlew jar assembleRelease publishApiJarPublicationToReleaseRepository publishReleasePublicationToReleaseRepository bintrayUpload
       # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
