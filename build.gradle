@@ -18,13 +18,13 @@ allprojects {
         branch = 'git rev-parse --abbrev-ref HEAD'.execute([], project.rootDir).text.trim()
         sha = 'git rev-parse --short HEAD'.execute([], project.rootDir).text.trim()
         apiVersion = "1.0.2"
-        apiVersionCode = 1002
+        apiVersionCode = 1003
 
         getVersionName = { suffix = '' ->
             if (!branch || branch.equals('master')) {
                 return "${apiVersion}${suffix}"
             } else if (branch.startsWith('release/')) {
-                "${apiVersion}${suffix}-RC1"
+                "${apiVersion}${suffix}-RC2"
             } else {
                 "${apiVersion}${suffix}-SNAPSHOT-${sha}"
             }

@@ -1,0 +1,27 @@
+def resolveProperty(String name, Object target = project) {
+    if (target.hasProperty(name)) {
+        return target.property(name);
+    } else if (target == project && System.getenv(name.toUpperCase())) {
+        return System.getenv(name.toUpperCase());
+    } else {
+        return null;
+    }
+}
+
+android.signingConfigs {
+    _empty {
+        storeFile file("./")
+        storePassword ""
+        keyAlias ""
+        keyPassword ""
+    }
+
+    if (resolveProperty("dev_keystore_path") && resolveProperty("dev_keystore_password")) {
+        sdk {
+            storeFile file(resolveProperty("dev_keystore_path"))
+            storePassword resolveProperty("dev_keystore_password")
+            keyAlias "key"
+            keyPassword resolveProperty("dev_keystore_password")
+        }
+    }
+}
