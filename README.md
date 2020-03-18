@@ -29,3 +29,4 @@ It simulates the `ContentProvider` which is embedded within the Agent, and allow
 **NOTE**
 You must install the `SimulatorApp` before this API will work.
 Only one of the Agent *or* the SimulatorApp may be installed on a single device at any one time.
+The simulator app returns a null UIN by default, this can be changed manually to match a project specific example inside of the app.
