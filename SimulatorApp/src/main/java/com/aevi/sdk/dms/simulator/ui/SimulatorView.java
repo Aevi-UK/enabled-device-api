@@ -37,6 +37,7 @@ import dagger.android.support.DaggerAppCompatActivity;
 
 public class SimulatorView extends DaggerAppCompatActivity {
 
+    @BindView(R.id.serial_field) protected TextView serialField;
     @BindView(R.id.uin_field) protected TextView uinField;
     @BindView(R.id.role_spinner) protected Spinner roleSpinner;
 
@@ -74,6 +75,7 @@ public class SimulatorView extends DaggerAppCompatActivity {
     private void initialiseView() {
         viewModel = ViewModelProviders.of(this, mVmFactory).get(SimulatorViewModel.class);
         viewModel.errorEvent.observe(this, this::onMessage);
+        viewModel.serialUpdateEvent.observe(this, this::onNewSerial);
         viewModel.uinUpdateEvent.observe(this, this::onNewUin);
         viewModel.accountRoleEvent.observe(this, this::onNewAccount);
         viewModel.settingsSavedEvent.observe(this, this::onSettingsSaved);
@@ -81,9 +83,10 @@ public class SimulatorView extends DaggerAppCompatActivity {
 
     private void onSaveClicked() {
         hideKeyboard();
+        String serial = serialField.getText().toString();
         String uin = uinField.getText().toString();
         int roleIndex = roleSpinner.getSelectedItemPosition();
-        viewModel.save(uin, roleIndex);
+        viewModel.save(serial, uin, roleIndex);
     }
 
     private void hideKeyboard() {
@@ -98,6 +101,10 @@ public class SimulatorView extends DaggerAppCompatActivity {
 
     private void onSettingsSaved(boolean success) {
         onMessage(getString(success  ? R.string.save_success : R.string.save_fail));
+    }
+
+    private void onNewSerial(@Nullable String serial) {
+        serialField.setText(serial);
     }
 
     private void onNewUin(@Nullable String uin) {

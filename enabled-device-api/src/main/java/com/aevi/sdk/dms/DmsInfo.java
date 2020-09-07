@@ -21,10 +21,21 @@ import io.reactivex.annotations.Nullable;
  */
 public final class DmsInfo {
 
+    private final String serial;
     private final String uin;
 
-    DmsInfo(@Nullable String uin) {
+    DmsInfo(@Nullable String serial, @Nullable String uin) {
+        this.serial = serial;
         this.uin = uin;
+    }
+
+    /**
+     * @return the serial number of this device. Starting from Android 8.0 or later Build.SERIAL isn't available
+     * to regular apps.
+     */
+    @Nullable
+    public String getSerial() {
+        return serial;
     }
 
     /**

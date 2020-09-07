@@ -32,6 +32,7 @@ import timber.log.Timber;
 public class SimulatorViewModel extends ViewModel {
 
     final MutableLiveData<String> errorEvent = new MutableLiveData<>();
+    final MutableLiveData<String> serialUpdateEvent = new MutableLiveData<>();
     final MutableLiveData<String> uinUpdateEvent = new MutableLiveData<>();
     final MutableLiveData<Integer> accountRoleEvent = new MutableLiveData<>();
     final MutableLiveData<Boolean> settingsSavedEvent = new MutableLiveData<>();
@@ -65,9 +66,10 @@ public class SimulatorViewModel extends ViewModel {
         disposables.add(dmsClient.info()
             .subscribeOn(schedulers.io())
             .observeOn(schedulers.main())
-            .subscribe(
-                dmsInfo -> uinUpdateEvent.setValue(dmsInfo.getUin()),
-                error -> errorEvent.setValue(error.getMessage())));
+            .subscribe(dmsInfo -> {
+                serialUpdateEvent.setValue(dmsInfo.getSerial());
+                uinUpdateEvent.setValue(dmsInfo.getUin());
+            }, error -> errorEvent.setValue(error.getMessage())));
     }
 
     private void subscribeToAccount() {
@@ -79,8 +81,8 @@ public class SimulatorViewModel extends ViewModel {
                 error -> errorEvent.setValue(error.getMessage())));
     }
 
-    void save(@Nullable String uin, int roleIndex) {
-        disposables.add(Observable.fromCallable(() -> appSettings.setUin(uin) && appSettings.setAccount(Account.Role.values()[roleIndex]))
+    void save(@Nullable String serial, @Nullable String uin, int roleIndex) {
+        disposables.add(Observable.fromCallable(() -> appSettings.setSerial(serial) && appSettings.setUin(uin) && appSettings.setAccount(Account.Role.values()[roleIndex]))
             .subscribeOn(schedulers.io())
             .observeOn(schedulers.main())
             .subscribe(
