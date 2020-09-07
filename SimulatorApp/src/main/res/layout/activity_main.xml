@@ -13,29 +13,54 @@
         tools:context=".ui.SimulatorView">
 
         <EditText
-            android:id="@+id/uin_field"
+            android:id="@+id/serial_field"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/small_margin"
             android:layout_marginTop="@dimen/small_margin"
             android:layout_marginEnd="@dimen/small_margin"
-            android:hint="@string/uin_hint"
+            android:hint="@string/serial_hint"
             android:importantForAutofill="no"
             android:inputType="text"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/uin_label"
+            app:layout_constraintStart_toEndOf="@+id/serial_label"
             app:layout_constraintTop_toTopOf="parent"
             tools:targetApi="26" />
 
         <TextView
-            android:id="@+id/uin_label"
+            android:id="@+id/serial_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/medium_margin"
-            android:text="@string/uin_label"
-            app:layout_constraintBottom_toBottomOf="@+id/uin_field"
+            android:text="@string/serial_label"
+            app:layout_constraintBottom_toBottomOf="@+id/serial_field"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/uin_field" />
+            app:layout_constraintTop_toTopOf="@+id/serial_field" />
+
+        <EditText
+                android:id="@+id/uin_field"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/small_margin"
+                android:layout_marginTop="@dimen/small_margin"
+                android:layout_marginEnd="@dimen/small_margin"
+                android:hint="@string/uin_hint"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/uin_label"
+                app:layout_constraintTop_toBottomOf="@+id/serial_field"
+                tools:targetApi="26" />
+
+        <TextView
+                android:id="@+id/uin_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/medium_margin"
+                android:text="@string/uin_label"
+                app:layout_constraintBottom_toBottomOf="@+id/uin_field"
+                app:layout_constraintEnd_toEndOf="@+id/serial_label"
+                app:layout_constraintTop_toTopOf="@+id/uin_field" />
 
         <Spinner
             android:id="@+id/role_spinner"
@@ -55,7 +80,7 @@
             android:layout_height="wrap_content"
             android:text="@string/role_label"
             app:layout_constraintBottom_toBottomOf="@+id/role_spinner"
-            app:layout_constraintEnd_toEndOf="@+id/uin_label"
+            app:layout_constraintEnd_toEndOf="@+id/serial_label"
             app:layout_constraintTop_toTopOf="@+id/role_spinner" />
     </android.support.constraint.ConstraintLayout>
 </android.support.design.widget.CoordinatorLayout>

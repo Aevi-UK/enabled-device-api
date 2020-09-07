@@ -32,6 +32,7 @@ import io.reactivex.annotations.Nullable;
 @SuppressWarnings("ApplySHaredPref")
 public class AppSettings {
 
+    private static final String KEY_SERIAL = "keySerial";
     private static final String KEY_UIN = "keyUin";
 
     private static final String KEY_ACCOUNT_ID = "keyAccountId";
@@ -50,8 +51,19 @@ public class AppSettings {
     }
 
     @Nullable
+    String getSerial() {
+        return sharedPreferences.getString(KEY_SERIAL, "123456ABCDEF");
+    }
+
+    public boolean setSerial(@Nullable String serial) {
+        return sharedPreferences.edit()
+                .putString(KEY_SERIAL, serial)
+                .commit();
+    }
+
+    @Nullable
     String getUin() {
-        return sharedPreferences.getString(KEY_UIN, null);
+        return sharedPreferences.getString(KEY_UIN, "A1B2C3D4E5F6");
     }
 
     public boolean setUin(@Nullable String uin) {

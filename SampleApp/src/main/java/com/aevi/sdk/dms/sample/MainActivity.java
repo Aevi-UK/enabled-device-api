@@ -29,6 +29,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity {
 
+    @BindView(R.id.serial_field) protected TextView serialField;
     @BindView(R.id.uin_field) protected TextView uinField;
     @BindView(R.id.role_field) protected TextView roleField;
     @BindView(R.id.error_field) protected TextView errorField;
@@ -65,9 +66,10 @@ public class MainActivity extends AppCompatActivity {
             .info()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                dmsInfo -> onData(uinField, dmsInfo.getUin()),
-                this::onError));
+            .subscribe(dmsInfo -> {
+                onData(serialField, dmsInfo.getSerial());
+                onData(uinField, dmsInfo.getUin());
+            }, this::onError));
     }
 
     private void subscribeToDmsAccount() {

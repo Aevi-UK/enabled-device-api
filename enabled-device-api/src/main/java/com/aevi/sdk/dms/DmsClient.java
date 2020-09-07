@@ -33,6 +33,7 @@ public final class DmsClient {
     public static final String SDK_DMS_INFO_METHOD = "dmsInfo";
     public static final String SDK_LOGGED_IN_ACCOUNT_METHOD = "loggedInAccount";
 
+    public static final String FIELD_SERIAL = "serial";
     public static final String FIELD_UIN = "uin";
 
     public static final String FIELD_ACCOUNT_ID = "id";
@@ -94,7 +95,7 @@ public final class DmsClient {
                 if (isEmpty(bundle)) {
                     throw new IllegalStateException("No DMS information found");
                 } else {
-                    emitter.onSuccess(new DmsInfo(bundle.getString(FIELD_UIN)));
+                    emitter.onSuccess(new DmsInfo(bundle.getString(FIELD_SERIAL), bundle.getString(FIELD_UIN)));
                 }
             } catch (Exception e) {
                 emitter.onError(e);

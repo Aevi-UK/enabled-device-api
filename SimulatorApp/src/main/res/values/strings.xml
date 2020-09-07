@@ -3,6 +3,8 @@
 
     <string name="save">Save</string>
 
+    <string name="serial_label">Serial</string>
+    <string name="serial_hint">Enter a serial here&#8230;</string>
     <string name="uin_label">UIN</string>
     <string name="uin_hint">Enter a UIN here&#8230;</string>
     <string name="save_success">Saved successfully</string>
