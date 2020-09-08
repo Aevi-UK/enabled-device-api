@@ -45,6 +45,7 @@ public class AppContentProvider extends DaggerContentProvider {
 
     private Bundle serialiseUin() {
         Bundle bundle = new Bundle();
+        bundle.putString(DmsClient.FIELD_SERIAL, appSettings.getSerial());
         bundle.putString(DmsClient.FIELD_UIN, appSettings.getUin());
         return bundle;
     }

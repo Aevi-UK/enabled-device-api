@@ -35,10 +35,11 @@ public class DmsClientTest {
     @Test
     public void validClientInfo() {
         // Given
+        String givenSerial = "the_serial";
         String givenUin = "the_uin";
         DmsClient client = new DmsClient(RuntimeEnvironment.systemContext);
         MockContentProvider contentProvider = mockContentProvider();
-        contentProvider.setInfo(mockDmsInfo(givenUin));
+        contentProvider.setInfo(mockDmsInfo(givenSerial, givenUin));
 
         // When
         TestObserver<DmsInfo> observer = client.info().test();
@@ -47,6 +48,7 @@ public class DmsClientTest {
         observer.assertNoErrors();
         observer.assertValueCount(1);
         DmsInfo receivedDmsInfo = observer.values().get(0);
+        Assert.assertEquals(receivedDmsInfo.getSerial(), givenSerial);
         Assert.assertEquals(receivedDmsInfo.getUin(), givenUin);
     }
 
@@ -55,7 +57,7 @@ public class DmsClientTest {
         // Given
         DmsClient client = new DmsClient(RuntimeEnvironment.systemContext);
         MockContentProvider contentProvider = mockContentProvider();
-        contentProvider.setInfo(mockDmsInfo(null));
+        contentProvider.setInfo(mockDmsInfo(null, null));
 
         // When
         TestObserver<DmsInfo> observer = client.info().test();
@@ -64,6 +66,7 @@ public class DmsClientTest {
         observer.assertNoErrors();
         observer.assertValueCount(1);
         DmsInfo receivedDmsInfo = observer.values().get(0);
+        Assert.assertNull(receivedDmsInfo.getSerial());
         Assert.assertNull(receivedDmsInfo.getUin());
     }
 
@@ -152,8 +155,9 @@ public class DmsClientTest {
             .get();
     }
 
-    private Bundle mockDmsInfo(@Nullable String uin) {
+    private Bundle mockDmsInfo(@Nullable String serial, @Nullable String uin) {
         Bundle bundle = new Bundle();
+        bundle.putString(DmsClient.FIELD_SERIAL, serial);
         bundle.putString(DmsClient.FIELD_UIN, uin);
         return bundle;
     }

@@ -13,6 +13,29 @@
         tools:context=".ui.SimulatorView">
 
         <TextView
+                android:id="@+id/serial_field"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/serial_label"
+                app:layout_constraintTop_toBottomOf="@+id/error_field"
+                tools:targetApi="26" />
+
+        <TextView
+                android:id="@+id/serial_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="@string/serial_label"
+                app:layout_constraintBottom_toBottomOf="@+id/serial_field"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/serial_field" />
+
+        <TextView
             android:id="@+id/uin_field"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -22,7 +45,7 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/uin_label"
-            app:layout_constraintTop_toBottomOf="@+id/error_field"
+            app:layout_constraintTop_toBottomOf="@+id/serial_field"
             tools:targetApi="26" />
 
         <TextView
@@ -32,7 +55,7 @@
             android:layout_marginStart="16dp"
             android:text="@string/uin_label"
             app:layout_constraintBottom_toBottomOf="@+id/uin_field"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/serial_label"
             app:layout_constraintTop_toTopOf="@+id/uin_field" />
 
         <TextView
@@ -53,7 +76,7 @@
             android:layout_height="wrap_content"
             android:text="@string/role_label"
             app:layout_constraintBottom_toBottomOf="@+id/role_field"
-            app:layout_constraintEnd_toEndOf="@+id/uin_label"
+            app:layout_constraintEnd_toEndOf="@+id/serial_label"
             app:layout_constraintTop_toTopOf="@+id/role_field" />
 
         <TextView
