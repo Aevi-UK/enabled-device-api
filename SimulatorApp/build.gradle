@@ -1,4 +1,7 @@
-apply plugin: 'com.android.application'
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+}
 
 apply from: "../signing.gradle"
 ext.groupId = "com.aevi.dms"
@@ -7,6 +10,7 @@ apply from: '../publish.gradle'
 
 android {
     compileSdkVersion compileSDK
+    buildToolsVersion androidBuildVersion
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -19,7 +23,7 @@ android {
         targetSdkVersion projectMaxSdkVersion
         versionCode project.apiVersionCode
         versionName project.getVersionName()
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -43,14 +47,15 @@ android {
 dependencies {
     implementation project(':enabled-device-api')
 
-    implementation domainDependencies.supportDesign
-    implementation domainDependencies.constraintLayout
     implementation domainDependencies.rxAndroid
     implementation domainDependencies.timber
-    implementation domainDependencies.lifecycleExtentions
     implementation domainDependencies.dagger
     implementation domainDependencies.daggerSupport
     implementation domainDependencies.butterknife
+
+    implementation presentationDependencies.appCompat
+    implementation presentationDependencies.constraintLayout
+    implementation presentationDependencies.material
 
     annotationProcessor aptDependencies.daggerProcessor
     annotationProcessor aptDependencies.daggerCompiler

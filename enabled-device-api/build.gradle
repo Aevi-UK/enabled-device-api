@@ -1,4 +1,7 @@
-apply plugin: 'java-library'
+plugins {
+    id 'java-library'
+    id 'kotlin'
+}
 
 ext.groupId = "com.aevi.dms"
 ext.artifactId = "enabled-device-api"
@@ -10,11 +13,13 @@ compileJava {
 }
 
 dependencies {
-    compileOnly domainDependencies.rxJava
     compileOnly domainDependencies.androidMockable
+    implementation domainDependencies.ktStdLib
+    implementation domainDependencies.ktCoroutinesAndroid
+    implementation domainDependencies.rxJava
 
+    implementation presentationDependencies.appCompat
     testImplementation testDependencies.junit
-    testImplementation domainDependencies.rxJava
     testImplementation testDependencies.robolectric
     testImplementation domainDependencies.androidMockable
 }

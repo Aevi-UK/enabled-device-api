@@ -14,9 +14,9 @@
 
 package com.aevi.sdk.dms.simulator.app;
 
-import android.arch.lifecycle.ViewModel;
-import android.arch.lifecycle.ViewModelProvider;
-import android.support.annotation.NonNull;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
+import io.reactivex.annotations.NonNull;
 
 public class ViewModelFactory<VMType extends ViewModel> implements ViewModelProvider.Factory {
 
@@ -30,6 +30,6 @@ public class ViewModelFactory<VMType extends ViewModel> implements ViewModelProv
     @Override
     @SuppressWarnings("unchecked")
     public <T extends ViewModel> T create(@NonNull Class<T> clazz) {
-        return (T)mViewModel;
+        return (T) mViewModel;
     }
 }
