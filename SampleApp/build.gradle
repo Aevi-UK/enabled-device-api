@@ -4,8 +4,8 @@ plugins {
 }
 
 android {
-    compileSdkVersion compileSDK
-    buildToolsVersion androidBuildVersion
+    compileSdkVersion project.compileSdkVersion
+    buildToolsVersion project.buildToolsVersion
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -16,7 +16,7 @@ android {
         applicationId "com.aevi.sdk.dms.sample"
         minSdkVersion projectMinSdkVersion
         targetSdkVersion projectMaxSdkVersion
-        versionCode project.apiVersionCode
+        versionCode project.versionCode
         versionName project.getVersionName()
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

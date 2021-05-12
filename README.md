@@ -3,15 +3,20 @@ An API that can be used to access details about the AEVI enabled device that you
 It can be used to query a device's UIN and logged in user at runtime.
 
 ## Adding the dependency to your project
-
-The `enabled-device-api` is published to Bintray. Add the snippet below to your top-level build.gradle repositories DSL:
+You will need to generate a [Github personal access token](https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/creating-a-personal-access-token) with the `read:packages` OAuth scope and then define the following repository in you main gradle project file:
 ```
 maven {
-    url "http://dl.bintray.com/aevi/aevi-uk"
+    name = "github"
+    url = uri("https://maven.pkg.github.com/aevi-uk/*")
+    credentials {
+        username = "[your github username]"
+        password = "[your github personal access token]"
+    }
 }
 ```
 
-Then, in your application build.gradle:
+This will allow Gradle to fetch prebuilt binaries of the library from the AEVI publication repository. You can then add the dependency to your relevant module _build.gradle_ file:
+
 
 ```
 implementation "com.aevi.dms:enabled-device-api:<version>"
