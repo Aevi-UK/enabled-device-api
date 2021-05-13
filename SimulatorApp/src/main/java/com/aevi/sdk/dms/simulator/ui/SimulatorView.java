@@ -15,33 +15,35 @@
 package com.aevi.sdk.dms.simulator.ui;
 
 import android.app.Activity;
-import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Spinner;
 import android.widget.TextView;
-
+import androidx.lifecycle.ViewModelProvider;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.aevi.sdk.dms.simulator.R;
 import com.aevi.sdk.dms.simulator.app.ViewModelFactory;
+import com.google.android.material.snackbar.Snackbar;
+import dagger.android.support.DaggerAppCompatActivity;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.annotations.Nullable;
 
 import javax.inject.Inject;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import dagger.android.support.DaggerAppCompatActivity;
-
 public class SimulatorView extends DaggerAppCompatActivity {
 
-    @BindView(R.id.serial_field) protected TextView serialField;
-    @BindView(R.id.uin_field) protected TextView uinField;
-    @BindView(R.id.role_spinner) protected Spinner roleSpinner;
+    @BindView(R.id.serial_field)
+    protected TextView serialField;
+    @BindView(R.id.uin_field)
+    protected TextView uinField;
+    @BindView(R.id.role_spinner)
+    protected Spinner roleSpinner;
 
-    @Inject protected ViewModelFactory<SimulatorViewModel> mVmFactory;
+    @Inject
+    protected ViewModelFactory<SimulatorViewModel> mVmFactory;
 
     private SimulatorViewModel viewModel;
 
@@ -73,7 +75,7 @@ public class SimulatorView extends DaggerAppCompatActivity {
     }
 
     private void initialiseView() {
-        viewModel = ViewModelProviders.of(this, mVmFactory).get(SimulatorViewModel.class);
+        viewModel = new ViewModelProvider(this, mVmFactory).get(SimulatorViewModel.class);
         viewModel.errorEvent.observe(this, this::onMessage);
         viewModel.serialUpdateEvent.observe(this, this::onNewSerial);
         viewModel.uinUpdateEvent.observe(this, this::onNewUin);
@@ -90,7 +92,7 @@ public class SimulatorView extends DaggerAppCompatActivity {
     }
 
     private void hideKeyboard() {
-        InputMethodManager imm = (InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
+        InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(uinField.getWindowToken(), 0);
         uinField.clearFocus();
     }
@@ -100,7 +102,7 @@ public class SimulatorView extends DaggerAppCompatActivity {
     }
 
     private void onSettingsSaved(boolean success) {
-        onMessage(getString(success  ? R.string.save_success : R.string.save_fail));
+        onMessage(getString(success ? R.string.save_success : R.string.save_fail));
     }
 
     private void onNewSerial(@Nullable String serial) {

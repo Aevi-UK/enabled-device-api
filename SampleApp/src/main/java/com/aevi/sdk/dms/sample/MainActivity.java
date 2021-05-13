@@ -14,25 +14,27 @@
 
 package com.aevi.sdk.dms.sample;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-
-import com.aevi.sdk.dms.DmsClient;
-
+import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import com.aevi.sdk.dms.DmsClient;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity {
 
-    @BindView(R.id.serial_field) protected TextView serialField;
-    @BindView(R.id.uin_field) protected TextView uinField;
-    @BindView(R.id.role_field) protected TextView roleField;
-    @BindView(R.id.error_field) protected TextView errorField;
+    @BindView(R.id.serial_field)
+    protected TextView serialField;
+    @BindView(R.id.uin_field)
+    protected TextView uinField;
+    @BindView(R.id.role_field)
+    protected TextView roleField;
+    @BindView(R.id.error_field)
+    protected TextView errorField;
 
     private DmsClient dmsClient;
     private CompositeDisposable disposables;
@@ -63,23 +65,23 @@ public class MainActivity extends AppCompatActivity {
 
     private void subscribeToDmsInfo() {
         disposables.add(dmsClient
-            .info()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(dmsInfo -> {
-                onData(serialField, dmsInfo.getSerial());
-                onData(uinField, dmsInfo.getUin());
-            }, this::onError));
+                .info()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(dmsInfo -> {
+                    onData(serialField, dmsInfo.getSerial());
+                    onData(uinField, dmsInfo.getUin());
+                }, this::onError));
     }
 
     private void subscribeToDmsAccount() {
         disposables.add(dmsClient
-            .loggedInAccount()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                account -> onData(roleField, account.getRole().name()),
-                this::onError));
+                .loggedInAccount()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        account -> onData(roleField, account.getRole().name()),
+                        this::onError));
     }
 
     private void onData(TextView textView, String data) {

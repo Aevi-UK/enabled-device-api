@@ -1,7 +1,7 @@
 #!/bin/bash
 
 LOCAL_KEYSTORE_FOLDER="keystores"
-GRADLE_PROPERTIES_FILE="gradle.properties"
+GRADLE_PROPERTIES_FILE="local.properties"
 OUTPUT_PROPS=${GRADLE_PROPERTIES_FILE}
 
 mkdir -p "$LOCAL_KEYSTORE_FOLDER"

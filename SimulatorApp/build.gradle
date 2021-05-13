@@ -1,12 +1,19 @@
-apply plugin: 'com.android.application'
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+}
 
-apply from: "../signing.gradle"
-ext.groupId = "com.aevi.dms"
-ext.artifactId = "enabled-device-simulator"
-apply from: '../publish.gradle'
+applyScript("publishingUtils")
+
+publishingUtils?.publication { variant ->
+    groupId project.publicationGroup
+    artifactId "enabled-device-simulator-$variant"
+    version project.getVersionName()
+}
 
 android {
-    compileSdkVersion compileSDK
+    compileSdkVersion project.compileSdkVersion
+    buildToolsVersion project.buildToolsVersion
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -17,25 +24,15 @@ android {
         applicationId "com.aevi.sdk.dms.enabled"
         minSdkVersion projectMinSdkVersion
         targetSdkVersion projectMaxSdkVersion
-        versionCode project.apiVersionCode
+        versionCode project.versionCode
         versionName project.getVersionName()
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
-        debug {
-            signingConfig signingConfigs.hasProperty('sdk') ? signingConfigs.sdk : signingConfig
-        }
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.hasProperty('sdk') ? signingConfigs.sdk : signingConfigs._empty
-        }
-        unsigned {
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig null
-            matchingFallbacks = ['release']
         }
     }
 }
@@ -43,14 +40,15 @@ android {
 dependencies {
     implementation project(':enabled-device-api')
 
-    implementation domainDependencies.supportDesign
-    implementation domainDependencies.constraintLayout
     implementation domainDependencies.rxAndroid
     implementation domainDependencies.timber
-    implementation domainDependencies.lifecycleExtentions
     implementation domainDependencies.dagger
     implementation domainDependencies.daggerSupport
     implementation domainDependencies.butterknife
+
+    implementation presentationDependencies.appCompat
+    implementation presentationDependencies.constraintLayout
+    implementation presentationDependencies.material
 
     annotationProcessor aptDependencies.daggerProcessor
     annotationProcessor aptDependencies.daggerCompiler

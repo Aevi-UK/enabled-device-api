@@ -3,7 +3,6 @@
 **/build/
 local.properties
 *.iml
-gradle.properties
 *.apk
 .DS_Store
 /captures
