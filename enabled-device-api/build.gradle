@@ -3,9 +3,13 @@ plugins {
     id 'kotlin'
 }
 
-ext.groupId = "com.aevi.dms"
-ext.artifactId = "enabled-device-api"
-apply from: '../bintray.gradle'
+applyScript("publishingUtils")
+
+publishingUtils?.publication { variant ->
+    groupId project.publicationGroup
+    artifactId "enabled-device-api"
+    version project.getVersionName()
+}
 
 compileJava {
     sourceCompatibility = JavaVersion.VERSION_1_8
